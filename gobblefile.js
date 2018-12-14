@@ -8,7 +8,8 @@ var src = gobble('src');
 var concatenatedWebWorker = src.transform('rollup', {
 	entry: 'slicerWebWorker.js',
 	dest: 'slicerWebWorker.js.worker',
-	format: 'cjs',
+	format: 'umd',
+	moduleId: 'leaflet-vectorgrid-ww',
 	sourceMap: true,
 	plugins: [
 		require('rollup-plugin-buble')({
@@ -19,6 +20,7 @@ var concatenatedWebWorker = src.transform('rollup', {
 			main: true
 		}),
 		require('rollup-plugin-commonjs')(),
+		//require('rollup-plugin-umd')(),
 // 		require('rollup-plugin-file-as-blob')({
 // 			include: '**/**.png'
 // 		}),
@@ -28,17 +30,22 @@ var concatenatedWebWorker = src.transform('rollup', {
 var uglifiedWebWorker = src.transform('rollup', {
 	entry: 'slicerWebWorker.js',
 	dest: 'slicerWebWorker.js.worker',
-	format: 'cjs',
+	format: 'umd',
+	moduleId: 'leaflet-vectorgrid-ww',
 	sourceMap: false,
 	plugins: [
 		require('rollup-plugin-buble')({
-			include: '**/**.js'
+			include: '**/**.js' /*,
+			transforms: {
+				modules: false
+			}*/
 		}),
 		require('rollup-plugin-node-resolve')({
 			jsnext: false,
 			main: true
 		}),
 		require('rollup-plugin-commonjs')(),
+		//require('rollup-plugin-umd')(),
 		require('rollup-plugin-uglify')()
 	]
 });
@@ -64,6 +71,7 @@ var rollupPluginOptions = [
 		main: true
 	}),
 	require('rollup-plugin-commonjs')(),
+	//require('rollup-plugin-umd')(),
 ];
 
 var rollupUglyPluginOptions = rollupPluginOptions.concat([require('rollup-plugin-uglify')()]);
@@ -72,8 +80,13 @@ var rollupUglyPluginOptions = rollupPluginOptions.concat([require('rollup-plugin
 var builtCode = src2.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.js',
-	format: 'cjs',
+	format: 'umd',
+	moduleId: 'leaflet-vectorgrid',
 	sourceMap: true,
+	external: ['leaflet'],
+	globals: {
+		leaflet: 'L'
+	},
 	plugins: rollupPluginOptions
 });
 
@@ -85,8 +98,10 @@ var bundledCode = src2.transform('rollup', {
 	format: 'iife',
 	sourceMap: true,
 	plugins: rollupPluginOptions,
+	external: ['leaflet'],
 	globals: {
 		Pbf: 'Pbf',
+		leaflet: 'L',
 		VectorTile: 'vector-tile',
 	}
 });
@@ -95,8 +110,12 @@ var bundledCode = src2.transform('rollup', {
 var uglifiedCode = src2uglified.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.min.js',
-	format: 'cjs',
+	format: 'umd',
+	moduleId: 'leaflet-vectorgrid',
 	sourceMap: false,
+	globals: {
+		leaflet: 'L'
+	},
 	plugins: rollupUglyPluginOptions
 });
 
@@ -104,8 +123,12 @@ var uglifiedCode = src2uglified.transform('rollup', {
 var uglifiedBundledCode = src2uglified.transform('rollup', {
 	entry: 'bundle-extra.js',
 	dest: 'Leaflet.VectorGrid.bundled.min.js',
-	format: 'cjs',
+	format: 'umd',
+	moduleId: 'leaflet-vectorgrid',
 	sourceMap: false,
+	globals: {
+		leaflet: 'L'
+	},
 	plugins: rollupUglyPluginOptions
 });
 
