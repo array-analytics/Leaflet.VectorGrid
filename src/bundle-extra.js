@@ -5,7 +5,7 @@
 import {} from 'whatwg-fetch'
 
 import {} from 'pbf';
-import {VectorTile} from 'vector-tile';
+import {VectorTile} from '@mapbox/vector-tile';
 
 import {} from './Leaflet.VectorGrid.js';
 import {} from './Leaflet.VectorGrid.Protobuf.js';
