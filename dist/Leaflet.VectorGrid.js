@@ -1,21 +1,8 @@
-(function (factory, window) {
-    // define an AMD module that relies on 'leaflet'
-    if (typeof define === 'function' && define.amd) {
-        define(['leaflet'], factory);
-
-    // define a Common JS module that relies on 'leaflet'
-    } else if (typeof exports === 'object') {
-        module.exports = factory(require('leaflet'));
-    }
-
-    // attach your plugin to the global 'L' variable
-    if (typeof window !== 'undefined' && window.L) {
-        window.L.VectorGrid = factory(L);
-    }
-  //typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-  //typeof define === 'function' && define.amd ? define('leaflet-vectorgrid', factory) : // thisglo
-  //(factory());
-}(this, (function (L) { 'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('leaflet')) :
+  typeof define === 'function' && define.amd ? define('leaflet-vectorgrid', ['leaflet'], factory) :
+  (factory(global.L));
+}(this, (function (leaflet) { 'use strict';
 
 function __$strToBlobUri(str, mime, isBinary) {try {return window.URL.createObjectURL(new Blob([Uint8Array.from(str.split('').map(function(c) {return c.charCodeAt(0)}))], {type: mime}));} catch (e) {return "data:" + mime + (isBinary ? ";base64," : ",") + str;}}
 
@@ -2264,5 +2251,5 @@ L.canvas.tile = function(tileCoord, tileSize, opts){
 // Aux file to bundle everything together
 // need to wrap this correctly
 
-}, window)));
+})));
 //# sourceMappingURL=Leaflet.VectorGrid.js.map
