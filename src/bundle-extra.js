@@ -3,6 +3,8 @@
 // for protobuf tiles
 
 import {} from 'whatwg-fetch'
+import * as L from 'leaflet'
+
 
 import {} from 'pbf';
 import {VectorTile} from '@mapbox/vector-tile';

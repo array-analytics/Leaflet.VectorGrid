@@ -31,7 +31,7 @@ var uglifiedWebWorker = src.transform('rollup', {
 	entry: 'slicerWebWorker.js',
 	dest: 'slicerWebWorker.js.worker',
 	format: 'umd',
-	moduleId: 'leaflet-vectorgrid-ww',
+	moduleId: 'leaflet.vectorgrid-ww',
 	sourceMap: false,
 	plugins: [
 		require('rollup-plugin-buble')({
@@ -81,11 +81,12 @@ var builtCode = src2.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.js',
 	format: 'umd',
-	moduleId: 'leaflet-vectorgrid',
-	moduleName: 'leaflet-vectorgrid',
+	moduleId: 'leaflet.vectorgrid',
+	moduleName: 'leaflet.vectorgrid',
 	sourceMap: true,
 	external: ['leaflet', 'Pbf'],
 	globals: {
+		Pbf: 'Pbf',
 		leaflet: 'L'
 	},
 	plugins: rollupPluginOptions
@@ -97,8 +98,8 @@ var bundledCode = src2.transform('rollup', {
 	entry: 'bundle-extra.js',
 	dest: 'Leaflet.VectorGrid.bundled.js',
 	format: 'umd',
-	moduleId: 'leaflet-vectorgrid',
-	moduleName: 'leaflet-vectorgrid',
+	moduleId: 'leaflet.vectorgrid',
+	moduleName: 'leaflet.vectorgrid',
 	sourceMap: true,
 	plugins: rollupPluginOptions,
 	external: ['leaflet', 'Pbf'],
@@ -114,8 +115,8 @@ var uglifiedCode = src2uglified.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.min.js',
 	format: 'umd',
-	moduleId: 'leaflet-vectorgrid',
-	moduleName: 'leaflet-vectorgrid',
+	moduleId: 'leaflet.vectorgrid',
+	moduleName: 'leaflet.vectorgrid',
 	sourceMap: false,
 	external: ['leaflet', 'Pbf'],
 	globals: {
@@ -131,8 +132,8 @@ var uglifiedBundledCode = src2uglified.transform('rollup', {
 	entry: 'bundle-extra.js',
 	dest: 'Leaflet.VectorGrid.bundled.min.js',
 	format: 'umd',
-	moduleId: 'leaflet-vectorgrid',
-	moduleName: 'leaflet-vectorgrid',
+	moduleId: 'leaflet.vectorgrid',
+	moduleName: 'leaflet.vectorgrid',
 	sourceMap: false,
 	globals: {
 		leaflet: 'L'
