@@ -1,5 +1,6 @@
 
 // Aux file to bundle everything together
+// need to wrap this correctly
 
 import {} from './Leaflet.VectorGrid.js';
 import {} from './Leaflet.VectorGrid.Protobuf.js';
