@@ -8,8 +8,7 @@ var src = gobble('src');
 var concatenatedWebWorker = src.transform('rollup', {
 	entry: 'slicerWebWorker.js',
 	dest: 'slicerWebWorker.js.worker',
-	format: 'umd',
-	moduleId: 'leaflet-vectorgrid-ww',
+	format: 'cjs',
 	sourceMap: true,
 	plugins: [
 		require('rollup-plugin-buble')({
@@ -20,7 +19,6 @@ var concatenatedWebWorker = src.transform('rollup', {
 			main: true
 		}),
 		require('rollup-plugin-commonjs')(),
-		//require('rollup-plugin-umd')(),
 // 		require('rollup-plugin-file-as-blob')({
 // 			include: '**/**.png'
 // 		}),
@@ -30,22 +28,17 @@ var concatenatedWebWorker = src.transform('rollup', {
 var uglifiedWebWorker = src.transform('rollup', {
 	entry: 'slicerWebWorker.js',
 	dest: 'slicerWebWorker.js.worker',
-	format: 'umd',
-	moduleId: 'leaflet.vectorgrid-ww',
+	format: 'cjs',
 	sourceMap: false,
 	plugins: [
 		require('rollup-plugin-buble')({
-			include: '**/**.js' /*,
-			transforms: {
-				modules: false
-			}*/
+			include: '**/**.js'
 		}),
 		require('rollup-plugin-node-resolve')({
 			jsnext: false,
 			main: true
 		}),
 		require('rollup-plugin-commonjs')(),
-		//require('rollup-plugin-umd')(),
 		require('rollup-plugin-uglify')()
 	]
 });
@@ -71,7 +64,7 @@ var rollupPluginOptions = [
 		main: true
 	}),
 	require('rollup-plugin-commonjs')(),
-	//require('rollup-plugin-umd')(),
+	//require('rollup-plugin-amd')(),
 ];
 
 var rollupUglyPluginOptions = rollupPluginOptions.concat([require('rollup-plugin-uglify')()]);
@@ -80,7 +73,7 @@ var rollupUglyPluginOptions = rollupPluginOptions.concat([require('rollup-plugin
 var builtCode = src2.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.js',
-	format: 'umd',
+	format: 'amd',
 	moduleId: 'leaflet.vectorgrid',
 	moduleName: 'leaflet.vectorgrid',
 	sourceMap: true,
@@ -97,7 +90,7 @@ var builtCode = src2.transform('rollup', {
 var bundledCode = src2.transform('rollup', {
 	entry: 'bundle-extra.js',
 	dest: 'Leaflet.VectorGrid.bundled.js',
-	format: 'umd',
+	format: 'amd',
 	moduleId: 'leaflet.vectorgrid',
 	moduleName: 'leaflet.vectorgrid',
 	sourceMap: true,
@@ -114,7 +107,7 @@ var bundledCode = src2.transform('rollup', {
 var uglifiedCode = src2uglified.transform('rollup', {
 	entry: 'bundle.js',
 	dest: 'Leaflet.VectorGrid.min.js',
-	format: 'umd',
+	format: 'amd',
 	moduleId: 'leaflet.vectorgrid',
 	moduleName: 'leaflet.vectorgrid',
 	sourceMap: false,
@@ -131,7 +124,7 @@ var uglifiedCode = src2uglified.transform('rollup', {
 var uglifiedBundledCode = src2uglified.transform('rollup', {
 	entry: 'bundle-extra.js',
 	dest: 'Leaflet.VectorGrid.bundled.min.js',
-	format: 'umd',
+	format: 'amd',
 	moduleId: 'leaflet.vectorgrid',
 	moduleName: 'leaflet.vectorgrid',
 	sourceMap: false,
