@@ -1,4 +1,4 @@
-define('leaflet.vectorgrid', ['leaflet'], function (leaflet) { 'use strict';
+define('leaflet.vectorgrid', ['leaflet'], function (L) { 'use strict';
 
 function __$strToBlobUri(str, mime, isBinary) {try {return window.URL.createObjectURL(new Blob([Uint8Array.from(str.split('').map(function(c) {return c.charCodeAt(0)}))], {type: mime}));} catch (e) {return "data:" + mime + (isBinary ? ";base64," : ",") + str;}}
 
@@ -2612,7 +2612,7 @@ L.VectorGrid.Slicer = L.VectorGrid.extend({
 		maxZoom: 14  	// Default for geojson-vt
 	},
 
-	initialize: function(geojson, options) {
+	initialize: function(geojson, options, worker) {
 		L.VectorGrid.prototype.initialize.call(this, options);
 
 		// Create a shallow copy of this.options, excluding things that might
@@ -2628,8 +2628,12 @@ L.VectorGrid.Slicer = L.VectorGrid.extend({
 		}
 
 // 		this._worker = new Worker(window.URL.createObjectURL(new Blob([workerCode])));
-		this._worker = new Worker(workerCode);
-
+		if (worker) {
+			this._worker = worker;
+		} else {
+			this._worker = new Worker(workerCode);
+		}
+		
 		// Send initial data to worker.
 		this._worker.postMessage(['slice', geojson, options]);
 
@@ -2662,7 +2666,10 @@ L.VectorGrid.Slicer = L.VectorGrid.extend({
 
 
 L.vectorGrid.slicer = function (geojson, options) {
-	return new L.VectorGrid.Slicer(geojson, options);
+	if (!this._worker || options.newWorker) {
+		this._worker = new Worker(workerCode);
+	}
+	return new L.VectorGrid.Slicer(geojson, options, this._worker);
 };
 
 L.Canvas.Tile = L.Canvas.extend({
